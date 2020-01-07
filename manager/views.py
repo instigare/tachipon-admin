@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
@@ -15,10 +15,44 @@ class ReportListView(generic.ListView):
 
 @method_decorator(login_required, name='dispatch')
 class ReportDetailView(generic.DetailView):
-    model = Report
+	model = Report
 
-def index(request):
-	return render(request, 'index.html')
+@login_required
+@csrf_exempt
+def delete(request):
+	reportid = request.GET.get('id', '')
+
+	reportinst = Report.objects.get(id = reportid)
+	reportinst.delete()
+
+	# return JsonResponse({
+	# 	'status': 'deleted',
+	# })
+
+	return redirect('/')
+
+@login_required
+@csrf_exempt
+def update(request):
+	reportid = request.GET.get('id', '')
+
+	reportinst = Report.objects.get(id = reportid)
+	reportinst.status = 1
+	reportinst.save()
+
+	# return JsonResponse(
+	# 	{
+	# 		'name': reportinst.name,
+	# 		'phone': reportinst.phone,
+	# 		'lat': reportinst.lat,
+	# 		'lng': reportinst.lng,
+	# 		'situation': reportinst.situation,
+	# 		'details': reportinst.details,
+	# 		'status': reportinst.status,
+	# 	}
+	# )
+
+	return redirect('/')
 
 @csrf_exempt
 def report(request):
