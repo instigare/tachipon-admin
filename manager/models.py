@@ -8,5 +8,6 @@ class Report(models.Model):
 	address = models.CharField(max_length = 200, null = True)
 	situation = models.TextField(null = True)
 	details = models.CharField(max_length = 200, null = True)
-	status = models.CharField(max_length = 200, null = True)
+	time = models.DateTimeField(auto_now = True)
+	status = models.IntegerField(default = 0)
 	image = models.ImageField(blank = True, null = True, upload_to = id)
