@@ -1,1 +1,1 @@
-django-filter
+django==2.2
