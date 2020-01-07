@@ -19,11 +19,12 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls import url
 from django.views.static import serve
+from django.views.generic import RedirectView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('manager/', include('django.contrib.auth.urls')),
-    path('manager/', include('manager.urls')),
+    url(r'', include('manager.urls')),
+    url(r'', include('django.contrib.auth.urls')),
+    path('admin/', admin.site.urls)
 ]
 
 if settings.DEBUG:
