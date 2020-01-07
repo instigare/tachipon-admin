@@ -1,0 +1,111 @@
+{% extends 'manager/report_base.html' %}
+
+{% block content %}
+<div class="container" style="width: 100%">
+	<h1>最近の通報</h1>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>時刻</th>
+				<th>詳細</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for report in report_list %}
+			{% if report.status == 0 %}
+			<tr class='clickable-row' data-href='details/{{ report.id }}'>
+				<td>{{ report.time }}</td>
+				<td><b>{{ report.situation }}による通報</b></td>
+				<td><button type="button" class="btn btn-info">詳細</button></td>
+			</tr>
+			{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+	<h1>処理済みの通報</h1>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>時刻</th>
+				<th>詳細</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for report in report_list %}
+			{% if report.status == 1 %}
+			<tr class='clickable-row' data-href='{{ report.id }}'>
+				<td>{{ report.time }}</td>
+				<td><b>{{ report.situation }}による通報</b></td>
+				<td><button type="button" class="btn btn-info">詳細</button></td>
+			</tr>
+			{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".clickable-row").click(function() {
+					window.location = $(this).data("href");
+				});
+			});
+		</script>
+</div>
+
+<div class="container" style="position: fixed; bottom: 0;">
+	<a href="{% url 'logout' %}"><h1>ログアウト</h1></a>
+</div>
+{% endblock %}
+
+
+
+{% block map %}
+<div id='map' style='width: 100%; height: 100vh;'></div>
+	<script>
+		var geojson = {
+			type: 'FeatureCollection',
+			features: [
+				{% for report in report_list %}
+				{% if report.status == 0 %}
+				{
+					type: 'Feature',
+					geometry: {
+						type: 'Point',
+						coordinates: [{{ report.lng }}, {{ report.lat }}]
+					},
+					properties: {
+						title: '{{ report.situation }}',
+						description: '{{ report.details }}',
+						time: '{{ report.time }}'
+					}
+				},
+				{% endif %}
+				{% endfor %}
+			]
+		};
+
+		mapboxgl.accessToken = 'pk.eyJ1IjoiYWx2aWthemkiLCJhIjoiY2s1M3pweHRkMGUzYjNrbWd2bThvZ21uYiJ9.HJbgOgd1eM_TrfSzhpm3fg';
+		var map = new mapboxgl.Map({
+			container: 'map',
+			style: 'mapbox://styles/mapbox/streets-v10',
+			center: [139.710571, 35.779579],
+			zoom: 12
+		});
+		
+		map.addControl(new MapboxLanguage({
+			defaultLanguage: 'ja'
+		}));
+
+		geojson.features.forEach(function(marker) {
+			var el = document.createElement('div');
+			el.className = 'marker';
+
+			new mapboxgl.Marker(el)
+				.setLngLat(marker.geometry.coordinates)
+				.setPopup(new mapboxgl.Popup({ offset: 25 })
+				.setHTML('<h3>' + marker.properties.title + '</h3><p style="color: #333;">' + marker.properties.description + '</p><p style="color: #333;"><i>' + marker.properties.time + '</i></p>'))
+				.addTo(map);
+		});
+	</script>
+{% endblock %}

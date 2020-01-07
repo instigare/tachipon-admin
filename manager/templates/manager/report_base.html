@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ report.situation }}による通報・たちぽんマネージャー</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+		<script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+		<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-language/v0.10.1/mapbox-gl-language.js'></script>
+		<link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+		<style type="text/css">
+			body {
+				background-color: #FF455C;
+				margin: 0;
+				padding: 0;
+			}
+
+			h1, h2, p, table {
+				color: #FFFFFF;
+			}
+
+			.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+				background-color: #FF3050;
+			}
+
+			thead {
+				font-size: 18px;
+				background-color: #FF3050;
+			}
+
+			.marker {
+				background-image: url('https://docs.mapbox.com/help/demos/custom-markers-gl-js/mapbox-icon.png');
+				background-size: cover;
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				cursor: pointer;
+			}
+
+			.mapboxgl-popup {
+				max-width: 200px;
+			}
+
+			.mapboxgl-popup-content {
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="row">
+
+			<div class="col-sm-4" style="padding: 30px;">
+
+				<p style="text-align: center;"><img src="/media/tachicon.png" style="width: 150px;"></p>
+				{% block content %}
+				{% endblock %}
+
+			</div>
+			<div class="col-sm-8">
+				
+				{% block map %}
+				{% endblock %}
+
+			</div>
+		</div>
+	</body>
+</html>
