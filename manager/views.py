@@ -11,7 +11,8 @@ def index(request):
 def report(request):
 	name = request.POST.get("name", None)
 	phone = request.POST.get("phone", None)
-	address = request.POST.get("address", None)
+	lat = request.POST.get("lat", None)
+	lng = request.POST.get("lng", None)
 	situation = request.POST.get("situation", None)
 	details = request.POST.get("details", None)
 	image = request.POST.get("image", None)
@@ -22,10 +23,14 @@ def report(request):
 		{
 			'name': name,
 			'phone': phone,
-			'address': address,
+			'lat': lat,
+			'lng': lng,
 			'situation': situation,
 			'details': details,
 			'image': image,
 			'reportcode': '0',
 		}
 	)
+
+# curl -d "name=value1&phone=value2" -H "Content-Type: application/x-www-form-urlencoded" -X POST http://127.0.0.1:8000/manager/report
+# https://stackoverflow.com/questions/57131896/how-do-i-save-google-places-location-to-django-models
