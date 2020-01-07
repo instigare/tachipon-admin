@@ -26,11 +26,11 @@
 
 <div class="container">
 	{% if report.status == 0 %}
-	<button type = "button" class = "btn btn-success">完了</button>
+	<button type = "button" class = "btn btn-success" onclick="location.href='/update/?id={{ report.id }}'">完了</button>
 	{% else %}
 	<button type = "button" class = "btn btn-success" disabled>完了済</button>
 	{% endif %}
-	<button type = "button" class = "btn btn-danger">削除</button>
+	<button type = "button" class = "btn btn-danger" onclick="location.href='/delete/?id={{ report.id }}'">削除</button>
 </div>
 
 
