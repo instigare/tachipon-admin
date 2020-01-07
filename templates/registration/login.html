@@ -1,6 +1,59 @@
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ログイン・たちぽんマネージャー</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+		<style type="text/css">
+			body {
+				background-color: #FF455C;
+				margin: 0;
+				padding: 0;
+			}
+
+			h1, p, label {
+				color: #FFFFFF;
+			}
+
+			.jumbotron h1 {
+				color: #FFFFFF;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="jumbotron text-center" style="background-color: #FF455C">
+			<p style="text-align: center;"><img src="/media/tachicon.png" style="width: 300px;"></p>
+			<div class="container" style="padding: 10px; margin-top: 20px; margin-bottom:20px; background-color: #FF3050; width: 100%">
+				<h1>たちぽん</h1>
+				<p>通報管理ツール</p>
+			</div>
+			<form method="post">
+				{% csrf_token %}
+				{{ form.non_field_errors }}
+
+				<div class="fieldWrapper">
+					{{ form.username.errors }}
+					<label for="{{ form.username.id_for_label }}">ユーザ名</label><br>
+					{{ form.username }}
+				</div>
+
+				<br>
+
+				<div class="fieldWrapper">
+					{{ form.password.errors }}
+					<label for="{{ form.password.id_for_label }}">パスワード</label><br>
+					{{ form.password }}
+				</div>
+
+				<br>
+
+				<button type="submit" class="btn btn-info">ログイン</button>
+			</form>
+		</div>
+		
+	</body>
+</html>
