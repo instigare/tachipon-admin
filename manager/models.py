@@ -10,4 +10,4 @@ class Report(models.Model):
 	details = models.CharField(max_length = 200, null = True)
 	time = models.DateTimeField(auto_now = True)
 	status = models.IntegerField(default = 0)
-	image = models.ImageField(blank = True, null = True, upload_to = id)
+	image = models.CharField(max_length = 200, null = True)
