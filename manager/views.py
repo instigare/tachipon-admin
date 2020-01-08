@@ -73,6 +73,7 @@ def report(request):
 	newreport.lng = lng
 	newreport.situation = situation
 	newreport.details = details
+	newreport.image = image
 	newreport.status = 0
 	newreport.save()
 	
