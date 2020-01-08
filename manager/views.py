@@ -56,13 +56,13 @@ def update(request):
 
 @csrf_exempt
 def report(request):
-	name = request.POST.get("name", None)
-	phone = request.POST.get("phone", None)
-	lat = request.POST.get("lat", None)
-	lng = request.POST.get("lng", None)
-	situation = request.POST.get("situation", None)
-	details = request.POST.get("details", None)
-	image = request.POST.get("image", None)
+	name = request.GET.get("name", None)
+	phone = request.GET.get("phone", None)
+	lat = request.GET.get("lat", None)
+	lng = request.GET.get("lng", None)
+	situation = request.GET.get("situation", None)
+	details = request.GET.get("details", None)
+	image = request.GET.get("image", None)
 
 	# insert calculator to get address using lat and lng
 
